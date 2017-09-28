@@ -73,9 +73,9 @@ if(info==""){
 		var remain = account - bj;
 		var yhk = hk*i;
 		if (i % 12 == 0)
-				info+= "还款" + i / 12 + "年后提前还款，已还款" + t2(yhk) + "元、剩余本金：" + t2(remain) + "万元、" + "总还款"
-						+ t2(yhk + remain) + "万元、总利息：" + t2(yhk + remain - account)
-						+ "万元、平均年利息" + t2((yhk + remain  - account) / (i / 12)) + "万元<br>";
+				info+= "还款" + i / 12 + "年后提前还款，已还款" + t2(yhk) + "元、剩余本金：" + t2(remain) + "元、" + "总还款"
+						+ t2(yhk + remain) + "元、总利息：" + t2(yhk + remain - account)
+						+ "元、平均年利息" + t2((yhk + remain  - account) / (i / 12)) + "元<br>";
 	}
 	
 
