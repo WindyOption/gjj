@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>贷款计算</title>
+</head>
+<body>
+<div style="margin-left:5%;margin-top:5%;">
+	<div style="width:100%">
+		<table>
+			<tr>
+				<td>
+					总额(万元)
+				</td>
+				<td>
+					<input id="account" type ="text" value="30"/>
+				</td>
+				<td>
+					年份(年)
+				</td>
+				<td>
+					<input id="year" type ="text" value="10"/>
+				</td>
+				<td>
+					年利率(%)
+				</td>
+				<td>
+					<input id="rate" type ="text" value="5.635"/>
+				</td>
+				<td>
+					提前还款手续费(元)
+				</td>
+				<td>
+					<input id="sa" type ="text"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input value="计算" type = "button" onclick = "calc()" style= "margin-top:30px;"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id ="result" style= "margin-top:30px;">
+	</div>
+</div>
+<script type="text/javascript">
+function t2(num){
+return num.toFixed(2);
+}
+function calc(){
+var account = document.getElementById("account").value*10000;
+var month = document.getElementById("year").value*12;
+var rate = document.getElementById("rate").value/1200;
+var sa = document.getElementById("sa").value;
+var hk=0;
+var info="";
+if(!account>0){
+	info = "总额不正确";
+}
+if(!month>0){
+	info = "年份不正确";
+}
+if(!rate>0){
+	info = "利率不正确";
+}
+if(info==""){
+	var a = 0;
+	a = Math.pow((1 + rate), month);
+	var sum = account*rate*a/(a-1);
+	hk = sum;
+	info="每月还款" + t2(sum)+"元、总还款" + t2(sum * month/10000) + "万元<br>";
+	var bj=0;
+	for(var i = 1;i<=month;i++){
+	console.info(-(account * rate - hk) * Math.pow((1 + rate), i - 1));
+		var b =-(account * rate - hk) * Math.pow((1 + rate), i - 1)
+		bj +=b;
+		var remain = account - bj;
+		var yhk = hk*i;
+		if (i % 12 == 0)
+				info+= "还款" + i / 12 + "年后提前还款，已还款" + t2(yhk) + "元、剩余本金：" + t2(remain) + "万元、" + "总还款"
+						+ t2(yhk + remain) + "万元、总利息：" + t2(yhk + remain - account)
+						+ "万元、平均年利息" + t2((yhk + remain  - account) / (i / 12)) + "万元<br>";
+	}
+	
+
+}
+
+document.getElementById("result").innerHTML = info;
+}
+calc();
+</script>
+</body>
+</html>
