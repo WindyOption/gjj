@@ -27,12 +27,7 @@
 				<td>
 					<input id="rate" type ="text" value="5.635"/>
 				</td>
-				<td>
-					提前还款手续费(元)
-				</td>
-				<td>
-					<input id="sa" type ="text"/>
-				</td>
+				
 			</tr>
 			<tr>
 				<td>
@@ -52,7 +47,7 @@ function calc(){
 var account = document.getElementById("account").value*10000;
 var month = document.getElementById("year").value*12;
 var rate = document.getElementById("rate").value/1200;
-var sa = document.getElementById("sa").value;
+
 var hk=0;
 var info="";
 if(!account>0){
