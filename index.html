@@ -6,6 +6,9 @@
 <style type="text/css">
 #table1 td{border-left:1px solid;border-top:1px solid;}
 #table1 th{border-left:1px solid;border-top:1px solid;}
+
+#table2 td{border-left:1px solid;border-top:1px solid;}
+#table2 th{border-left:1px solid;border-top:1px solid;}
 </style>
 </head>
 <body>
@@ -23,7 +26,7 @@
 					年份(年)
 				</td>
 				<td>
-					<input id="year" type ="text" value="10"/>
+					<input id="year" type ="text" value="20"/>
 				</td>
 				<td>
 					年利率(%)
@@ -40,10 +43,17 @@
 		</table>
 	</div>
 	<div id ="result" style= "margin-top:30px;">
+		<div style="float:left;width:600px;">
 		<span id= title></span>
-		<table id = "table1" style="border-right:1px solid;border-bottom:1px solid">
-			
+		<table id = "table1" style="border-right:1px solid;border-bottom:1px solid;">
+		
 		</table>
+		</div>
+		<div style="float:left;width:600px;">
+		<span id= title2></span>
+		<table id="table2" style = "border-right:1px solid;border-bottom:1px solid;">
+		</table>
+		</div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -67,6 +77,8 @@ if(!rate>0){
 	info = "利率不正确";
 }
 if(info==""){
+
+	/*等额本息贷款*/
 	document.getElementById('table1').innerHTML="<tr><th>已还款年限</th><th>已还款</th><th>剩余本金</th><th>总利息</th><th>平均年利息</th><th>总还款</th></tr>";
 	var a = 0;
 	a = Math.pow((1 + rate), month);
@@ -98,6 +110,25 @@ if(info==""){
 			*/			
 		}
 	}
+	
+	/*等额本金*/
+	document.getElementById('table2').innerHTML="<tr><th>已还款年限</th><th>已还款</th><th>剩余本金</th><th>总利息</th><th>平均年利息</th><th>总还款</th></tr>";
+	document.getElementById('title2').innerHTML="等额本金贷款"+account/10000+"万，"+month/12+"年，首月还款" + t2(account/month+account*rate)+"元、总还款" + t2(sum * month/10000) + "万元<br><span style='font-weight:600;'>提前还款表如下:<br>";
+	var yhk_bj = 0;
+	for(var j = 1;j<=month;j++){
+		var remain_bj = account*(month-j)/month;
+		var myhk = account/month +account*(month-j+1)/month*rate;
+		yhk_bj += myhk;
+		if (j % 12 == 0){
+			var rate2 = 0.03;
+			if(j > 12){rate2 = 0.02;}
+			if(j > 24 ){rate2 = 0.01;}
+			if(j> 36){rate2 = 0;}
+			document.getElementById('table2').innerHTML +="<tr><td>"+j/12+"年</td><td>"+t2(yhk_bj)+"</td><td>"+t2(remain_bj)+"</td><td>"+t2(yhk_bj + remain_bj +remain_bj * rate2- account) +"</td><td>"+t2((yhk_bj + remain_bj +remain_bj * rate2  - account) / (j / 12)) +"</td><td>"+t2(yhk_bj + remain_bj+remain_bj * rate2) +"</td></tr>"
+	
+		}
+	}
+	
 	
 
 }
