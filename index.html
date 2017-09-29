@@ -37,6 +37,17 @@
 		</table>
 	</div>
 	<div id ="result" style= "margin-top:30px;">
+		<table id = "table1">
+			<tr>
+				<th>已还款年份</th>
+				<th>剩余本金</th>
+				<th>总还款</th>
+				<th>总利息</th>
+				<th>平均年利息</th>
+			</tr>
+			<tr>
+			</tr>
+		</table>
 	</div>
 </div>
 <script type="text/javascript">
@@ -80,6 +91,13 @@ if(info==""){
 				info+= "还款" + i / 12 + "年后提前还款，已还款" + t2(yhk) + "元、剩余本金：" + t2(remain) + "元、" + "总还款"
 						+ t2(yhk + remain+remain * rate2) + "元、总利息：" + t2(yhk + remain +remain * rate2- account)
 						+ "元、平均年利息" + t2((yhk + remain +remain * rate2  - account) / (i / 12)) + "元<br>";
+			document.getElementById('table1').rows(i/12+1).cells(1).innerHTML=t2(yhk);
+			document.getElementById('table1').rows(i/12+1).cells(2).innerHTML=t2(remain);
+			document.getElementById('table1').rows(i/12+1).cells(3).innerHTML=t2(yhk + remain+remain * rate2) ;
+			document.getElementById('table1').rows((i/12)+1).cells(4).innerHTML= t2(yhk + remain +remain * rate2- account)
+			document.getElementById('table1').rows((i/12)+1).cells(5).innerHTML= t2((yhk + remain +remain * rate2  - account) / (i / 12));
+
+			
 		}
 	}
 	
