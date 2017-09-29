@@ -3,6 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>贷款计算</title>
+<style type="text/css">
+#table1 td{border-left:1px solid;border-top:1px solid;}
+#table1 th{border-left:1px solid;border-top:1px solid;}
+</style>
 </head>
 <body>
 <div style="margin-left:5%;margin-top:5%;">
@@ -27,7 +31,6 @@
 				<td>
 					<input id="rate" type ="text" value="5.635"/>
 				</td>
-				
 			</tr>
 			<tr>
 				<td>
@@ -37,16 +40,9 @@
 		</table>
 	</div>
 	<div id ="result" style= "margin-top:30px;">
-		<table id = "table1">
-			<tr>
-				<th>已还款年份</th>
-				<th>剩余本金</th>
-				<th>总还款</th>
-				<th>总利息</th>
-				<th>平均年利息</th>
-			</tr>
-			<tr>
-			</tr>
+		<span id= title></span>
+		<table id = "table1" style="border-right:1px solid;border-bottom:1px solid">
+			
 		</table>
 	</div>
 </div>
@@ -71,14 +67,14 @@ if(!rate>0){
 	info = "利率不正确";
 }
 if(info==""){
+	document.getElementById('table1').innerHTML="<tr><th>已还款年限</th><th>已还款</th><th>剩余本金</th><th>总利息</th><th>平均年利息</th><th>总还款</th></tr>";
 	var a = 0;
 	a = Math.pow((1 + rate), month);
 	var sum = account*rate*a/(a-1);
 	hk = sum;
-	info="每月还款" + t2(sum)+"元、总还款" + t2(sum * month/10000) + "万元<br>";
+	document.getElementById('title').innerHTML="等额本息贷款"+account/10000+"万，"+month/12+"年，每月还款" + t2(sum)+"元、总还款" + t2(sum * month/10000) + "万元<br><span style='font-weight:600;'>提前还款表如下:<br>";
 	var bj=0;
 	for(var i = 1;i<=month;i++){
-	console.info(-(account * rate - hk) * Math.pow((1 + rate), i - 1));
 		var b =-(account * rate - hk) * Math.pow((1 + rate), i - 1)
 		bj +=b;
 		var remain = account - bj;
@@ -91,20 +87,22 @@ if(info==""){
 				info+= "还款" + i / 12 + "年后提前还款，已还款" + t2(yhk) + "元、剩余本金：" + t2(remain) + "元、" + "总还款"
 						+ t2(yhk + remain+remain * rate2) + "元、总利息：" + t2(yhk + remain +remain * rate2- account)
 						+ "元、平均年利息" + t2((yhk + remain +remain * rate2  - account) / (i / 12)) + "元<br>";
-			document.getElementById('table1').rows(i/12+1).cells(1).innerHTML=t2(yhk);
+			
+			document.getElementById('table1').innerHTML +="<tr><td>"+i/12+"年</td><td>"+t2(yhk)+"</td><td>"+t2(remain)+"</td><td>"+t2(yhk + remain +remain * rate2- account) +"</td><td>"+t2((yhk + remain +remain * rate2  - account) / (i / 12)) +"</td><td>"+t2(yhk + remain+remain * rate2) +"</td></tr>"
+			
+			/*.rows(i/12+1).cells(1).innerHTML=t2(yhk);
 			document.getElementById('table1').rows(i/12+1).cells(2).innerHTML=t2(remain);
 			document.getElementById('table1').rows(i/12+1).cells(3).innerHTML=t2(yhk + remain+remain * rate2) ;
 			document.getElementById('table1').rows((i/12)+1).cells(4).innerHTML= t2(yhk + remain +remain * rate2- account)
-			document.getElementById('table1').rows((i/12)+1).cells(5).innerHTML= t2((yhk + remain +remain * rate2  - account) / (i / 12));
-
-			
+			document.getElementById('table1').rows((i/12)+1).cells(5).innerHTML= t2((yhk + remain +remain * rate2  - account) / (i / 12));	
+			*/			
 		}
 	}
 	
 
 }
 
-document.getElementById("result").innerHTML = info;
+//document.getElementById("result").innerHTML = info;
 }
 calc();
 </script>
