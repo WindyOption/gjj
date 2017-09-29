@@ -12,7 +12,9 @@
 </style>
 </head>
 <body>
-<div style="margin-left:3%;margin-top:3%;">
+<div id="result2" style="margin-left:3%;margin-top:3%;width:95%">
+</div>
+<div style="margin-left:3%;margin-top:3%;width:95%">
 	<div style="width:100%">
 		<table>
 			<tr>
@@ -38,7 +40,7 @@
 					人民币每年贬值率(%)
 				</td>
 				<td>
-					<input id="bzl" type ="text" value="10"/>
+					<input id="bzl" type ="text" value="20"/>
 				</td>
 			</tr>
 			<tr>
@@ -49,19 +51,21 @@
 		</table>
 	</div>
 	<div id ="result" style= "margin-top:30px;">
-		<div style="float:left;width:600px;">
+		<div style="float:right;width:50%;">
 		<span id= title></span>
 		<table id = "table1" style="border-right:1px solid;border-bottom:1px solid;">
 		
 		</table>
 		</div>
-		<div style="float:left;width:600px;">
+		<div style="float:left;width:50%;">
 		<span id= title2></span>
 		<table id="table2" style = "border-right:1px solid;border-bottom:1px solid;">
 		</table>
 		</div>
 	</div>
+	
 </div>
+
 <script type="text/javascript">
 function t2(num){
 return num.toFixed(2);
@@ -90,7 +94,6 @@ if(!bzl>0){
 if(info==""){
 	var bzl_bx=0;
 	var bzl_bj=0;
-	
 
 
 	/*等额本息贷款*/
@@ -147,6 +150,7 @@ if(info==""){
 	document.getElementById('title2').innerHTML="等额本金贷款"+account/10000+"万，"+month/12+"年，首月还款" + t2(account/month+account*rate)+"元、总还款" + t2(yhk_bj/10000) + "万元<br><span style='font-weight:600;'>提前还款表如下:<br>";
 	
 	
+	document.getElementById('result2').innerHTML="亲戚贷款月利率1分2，每年还款"+account*0.012*12+"，总还款"+t2(account*0.012*month+account);
 
 }
 
