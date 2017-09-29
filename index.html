@@ -12,7 +12,7 @@
 </style>
 </head>
 <body>
-<div style="margin-left:5%;margin-top:5%;">
+<div style="margin-left:3%;margin-top:3%;">
 	<div style="width:100%">
 		<table>
 			<tr>
@@ -33,6 +33,12 @@
 				</td>
 				<td>
 					<input id="rate" type ="text" value="5.635"/>
+				</td>
+				<td>
+					人民币每年贬值率(%)
+				</td>
+				<td>
+					<input id="bzl" type ="text" value="5"/>
 				</td>
 			</tr>
 			<tr>
@@ -64,6 +70,8 @@ function calc(){
 var account = document.getElementById("account").value*10000;
 var month = document.getElementById("year").value*12;
 var rate = document.getElementById("rate").value/1200;
+var bzl = document.getElementById("bzl").value/1200;
+
 
 var hk=0;
 var info="";
@@ -76,10 +84,17 @@ if(!month>0){
 if(!rate>0){
 	info = "利率不正确";
 }
+if(!bzl>0){
+	bzl=0;
+}
 if(info==""){
+	var bzl_bx=0;
+	var bzl_bj=0;
+	
+
 
 	/*等额本息贷款*/
-	document.getElementById('table1').innerHTML="<tr><th>已还款年限</th><th>已还款</th><th>剩余本金</th><th>总利息</th><th>平均年利息</th><th>总还款</th></tr>";
+	document.getElementById('table1').innerHTML="<tr><th>已还款年限</th><th>已还款</th><th>剩余本金</th><th>总利息</th><th>平均年利息</th><th>总还款</th><th>贬值率计算还款总额</th></tr>";
 	var a = 0;
 	a = Math.pow((1 + rate), month);
 	var sum = account*rate*a/(a-1);
@@ -91,6 +106,7 @@ if(info==""){
 		bj +=b;
 		var remain = account - bj;
 		var yhk = hk*i;
+		bzl_bx +=sum*Math.pow(1-bzl,i);
 		if (i % 12 == 0){
 			var rate2 = 0.03;
 			if(i > 12){rate2 = 0.02;}
@@ -100,7 +116,7 @@ if(info==""){
 						+ t2(yhk + remain+remain * rate2) + "元、总利息：" + t2(yhk + remain +remain * rate2- account)
 						+ "元、平均年利息" + t2((yhk + remain +remain * rate2  - account) / (i / 12)) + "元<br>";
 			
-			document.getElementById('table1').innerHTML +="<tr><td>"+i/12+"年</td><td>"+t2(yhk)+"</td><td>"+t2(remain)+"</td><td>"+t2(yhk + remain +remain * rate2- account) +"</td><td>"+t2((yhk + remain +remain * rate2  - account) / (i / 12)) +"</td><td>"+t2(yhk + remain+remain * rate2) +"</td></tr>"
+			document.getElementById('table1').innerHTML +="<tr><td>"+i/12+"年</td><td>"+t2(yhk)+"</td><td>"+t2(remain)+"</td><td>"+t2(yhk + remain +remain * rate2- account) +"</td><td>"+t2((yhk + remain +remain * rate2  - account) / (i / 12)) +"</td><td>"+t2(yhk + remain+remain * rate2) +"</td><td>"+t2(bzl_bx+remain*(1+rate2)*Math.pow(1-bzl,i))+"</td></tr>"
 			
 			/*.rows(i/12+1).cells(1).innerHTML=t2(yhk);
 			document.getElementById('table1').rows(i/12+1).cells(2).innerHTML=t2(remain);
@@ -112,22 +128,23 @@ if(info==""){
 	}
 	
 	/*等额本金*/
-	document.getElementById('table2').innerHTML="<tr><th>已还款年限</th><th>已还款</th><th>剩余本金</th><th>总利息</th><th>平均年利息</th><th>总还款</th></tr>";
-	document.getElementById('title2').innerHTML="等额本金贷款"+account/10000+"万，"+month/12+"年，首月还款" + t2(account/month+account*rate)+"元、总还款" + t2(sum * month/10000) + "万元<br><span style='font-weight:600;'>提前还款表如下:<br>";
+	document.getElementById('table2').innerHTML="<tr><th>已还款年限</th><th>已还款</th><th>剩余本金</th><th>总利息</th><th>平均年利息</th><th>总还款</th><th>贬值率计算还款总额</th></tr>";
 	var yhk_bj = 0;
 	for(var j = 1;j<=month;j++){
 		var remain_bj = account*(month-j)/month;
 		var myhk = account/month +account*(month-j+1)/month*rate;
 		yhk_bj += myhk;
+		bzl_bj +=myhk*Math.pow(1-bzl,j);
 		if (j % 12 == 0){
 			var rate2 = 0.03;
 			if(j > 12){rate2 = 0.02;}
 			if(j > 24 ){rate2 = 0.01;}
 			if(j> 36){rate2 = 0;}
-			document.getElementById('table2').innerHTML +="<tr><td>"+j/12+"年</td><td>"+t2(yhk_bj)+"</td><td>"+t2(remain_bj)+"</td><td>"+t2(yhk_bj + remain_bj +remain_bj * rate2- account) +"</td><td>"+t2((yhk_bj + remain_bj +remain_bj * rate2  - account) / (j / 12)) +"</td><td>"+t2(yhk_bj + remain_bj+remain_bj * rate2) +"</td></tr>"
+			document.getElementById('table2').innerHTML +="<tr><td>"+j/12+"年</td><td>"+t2(yhk_bj)+"</td><td>"+t2(remain_bj)+"</td><td>"+t2(yhk_bj + remain_bj +remain_bj * rate2- account) +"</td><td>"+t2((yhk_bj + remain_bj +remain_bj * rate2  - account) / (j / 12)) +"</td><td>"+t2(yhk_bj + remain_bj+remain_bj * rate2) +"</td><td>"+t2(bzl_bj+remain_bj*(1+rate2)*Math.pow(1-bzl,j))+"</td></tr>"
 	
 		}
 	}
+	document.getElementById('title2').innerHTML="等额本金贷款"+account/10000+"万，"+month/12+"年，首月还款" + t2(account/month+account*rate)+"元、总还款" + t2(yhk_bj/10000) + "万元<br><span style='font-weight:600;'>提前还款表如下:<br>";
 	
 	
 
