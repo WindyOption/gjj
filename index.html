@@ -22,7 +22,7 @@
 					总额(万元)
 				</td>
 				<td>
-					<input id="account" type ="text" value="30"/>
+					<input id="account" type ="text" value="25"/>
 				</td>
 				<td>
 					年份(年)
@@ -40,7 +40,7 @@
 					人民币每年贬值率(%)
 				</td>
 				<td>
-					<input id="bzl" type ="text" value="10"/>
+					<input id="bzl" type ="text" value="6"/>
 				</td>
 			</tr>
 			<tr>
@@ -116,8 +116,8 @@ if(info==""){
 			if(i > 24 ){rate2 = 0.01;}
 			if(i> 36){rate2 = 0;}
 				info+= "还款" + i / 12 + "年后提前还款，已还款" + t2(yhk) + "元、剩余本金：" + t2(remain) + "元、" + "总还款"
-						+ t2(yhk + remain+remain * rate2) + "元、总利息：" + t2(yhk + remain +remain * rate2- account)
-						+ "元、平均年利息" + t2((yhk + remain +remain * rate2  - account) / (i / 12)) + "元<br>";
+						+ t2(yhk + remain) + "元、总利息：" + t2(yhk + remain - account)
+						+ "元、平均年利息" + t2((yhk + remain   - account) / (i / 12)) + "元<br>";
 			
 			document.getElementById('table1').innerHTML +="<tr><td>"+i/12+"年</td><td>"+t2(yhk)+"</td><td>"+t2(remain)+"</td><td>"+t2(yhk + remain +remain * rate2- account) +"</td><td>"+t2((yhk + remain +remain * rate2  - account) / (i / 12)) +"</td><td>"+t2(yhk + remain+remain * rate2) +"</td><td>"+t2(bzl_bx+remain*(1+rate2)*Math.pow(1-bzl,i))+"</td></tr>"
 			
@@ -143,7 +143,7 @@ if(info==""){
 			if(j > 12){rate2 = 0.02;}
 			if(j > 24 ){rate2 = 0.01;}
 			if(j> 36){rate2 = 0;}
-			document.getElementById('table2').innerHTML +="<tr><td>"+j/12+"年</td><td>"+t2(yhk_bj)+"</td><td>"+t2(remain_bj)+"</td><td>"+t2(yhk_bj + remain_bj +remain_bj * rate2- account) +"</td><td>"+t2((yhk_bj + remain_bj +remain_bj * rate2  - account) / (j / 12)) +"</td><td>"+t2(yhk_bj + remain_bj+remain_bj * rate2) +"</td><td>"+t2(bzl_bj+remain_bj*(1+rate2)*Math.pow(1-bzl,j))+"</td></tr>"
+			document.getElementById('table2').innerHTML +="<tr><td>"+j/12+"年</td><td>"+t2(yhk_bj)+"</td><td>"+t2(remain_bj)+"</td><td>"+t2(yhk_bj + remain_bj - account) +"</td><td>"+t2((yhk_bj + remain_bj  - account) / (j / 12)) +"</td><td>"+t2(yhk_bj + remain_bj+remain_bj * rate2) +"</td><td>"+t2(bzl_bj+remain_bj*Math.pow(1-bzl,j))+"</td></tr>"
 	
 		}
 	}
